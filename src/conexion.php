@@ -1,11 +1,13 @@
 <?php
-$dsn = 'mysql:host=db;dbname=miapp;charset=utf8mb4';
-$username = 'root';
+$dsn = 'pgsql:host=db;port=5432;dbname=miapp';
+$username = 'postgres';
 $password = 'example';
 
 try {
-    $conn= new PDO($dsn, $username, $password);
+    $conn = new PDO($dsn, $username, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $conn->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+
 } catch (PDOException $e) {
     die('❌ Error de conexión: ' . $e->getMessage());
 }
