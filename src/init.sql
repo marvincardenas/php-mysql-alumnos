@@ -8,6 +8,6 @@ CREATE TABLE IF NOT EXISTS alumnos (
 );
 
 INSERT INTO alumnos (nombre, email) VALUES
-('Ana López', 'ana@example.com'),
-('Luis García', 'luis@example.com'),
+('Ana Lopez', 'ana@example.com'),
+('Luis Garcia', 'luis@example.com'),
 ('Marta Ruiz', 'marta@example.com');
