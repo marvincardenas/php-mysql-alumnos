@@ -1,14 +1,26 @@
 <?php
-$dsn = 'pgsql:host=db;port=5432;dbname=miapp';
-$username = 'postgres';
-$password = 'example';
+
+$host = getenv('DB_HOST');
+$port = getenv('DB_PORT') ?: '5432';
+$dbname = getenv('DB_NAME');
+$username = getenv('DB_USER');
+$password = getenv('DB_PASSWORD');
 
 try {
-    $conn = new PDO($dsn, $username, $password);
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $conn->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+    if (!$host) {
+        throw new Exception('La variable DB_HOST no está configurada');
+    }
 
-} catch (PDOException $e) {
-    die('❌ Error de conexión: ' . $e->getMessage());
+    $dsn = "pgsql:host=$host;port=$port;dbname=$dbname";
+
+    $conn = new PDO($dsn, $username, $password, [
+        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
+    ]);
+
+} catch (Throwable $e) {
+    error_log($e->getMessage());
+    die('Error de conexión: ' . htmlspecialchars($e->getMessage()));
 }
+
 ?>
